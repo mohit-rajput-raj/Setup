@@ -6,11 +6,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { on } from "events";
 import { toast } from "sonner";
+import { useState } from "react";
 
 type Props = {};
 
 const page = (props: Props) => {
   // await requireauth()
+  const [dats , setData] = useState<any>(null)
   const trpc = useTRPC()
   const {data , isLoading} = useQuery(trpc.getWorkflows.queryOptions())
   const queryClient = useQueryClient()
@@ -21,6 +23,12 @@ const page = (props: Props) => {
 
     }
   }))
+  const testAi = useMutation(trpc.testAi.mutationOptions({
+    onSuccess:(data)=>{
+      setData(data)
+      toast.success("ai fetched some data")
+    }
+  }))
   
 
   
@@ -29,9 +37,12 @@ const page = (props: Props) => {
      this is the end
      <div>
       {isLoading && <div>loading...</div>}
+      {dats && <div>{JSON.stringify(dats , null , 2)}</div>}
       {JSON.stringify(data , null , 2)}
       <Button disabled={create.isPending} onClick={()=>create.mutate()}>create</Button>
      </div>
+      <Button disabled={testAi.isPending} onClick={()=>testAi.mutate()}>aiii</Button>
+
      <Logout/>
     </div>
   );

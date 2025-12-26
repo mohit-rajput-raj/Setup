@@ -8,11 +8,11 @@ type Props = {}
 const Login = async(props: Props) => {
   await requireUnauth()
   return (
-    <div className='flex h-screen w-full justify-center items-center'>
+    
             <LoginForm className='w-87.5  '/>
 
         
-    </div>
+    
   )
 }
 

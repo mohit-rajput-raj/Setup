@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -85,7 +86,8 @@ export function SignUpForm({
     }
   });
   return (
-    <Form {...methods}>
+    <div>
+      <Form {...methods}>
       <form
         onSubmit={onHandleSubmit}
         className="h-full"
@@ -193,13 +195,14 @@ export function SignUpForm({
                       type="button"
                       disabled={isPanding}
                     >
+                      <Image alt="google" src="/logos/google.svg" width={20} height={20} />
                       Sign Up with Google
                     </Button>
                     <Button
                       variant="outline"
                       type="button"
                       disabled={isPanding}
-                    >
+                    ><Image alt="github" src="/logos/github.svg" width={20} height={20} />
                       Sign Up with github
                     </Button>
                     <FieldDescription className="text-center">
@@ -213,5 +216,6 @@ export function SignUpForm({
         </div>
       </form>
     </Form>
+    </div>
   );
 }

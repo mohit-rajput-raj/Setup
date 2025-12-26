@@ -16,12 +16,17 @@ export const execute = inngest.createFunction(
   { id: "execute-ai" },
   { event: "axecute/hello.ai" },
   async ({ event, step }) => {
-    
+    // Sentry.logger.warn("Rate limit reached for endpoint");
     const {steps}  = await step.ai.wrap("gemni-generate-text",generateText,
       {
         model:google("gemini-2.5-flash"),
         system:"you a helpfull assistent",
-        prompt:"2+34"
+        prompt:"2+34",
+        experimental_telemetry: {
+    isEnabled: true,
+    recordInputs: true,
+    recordOutputs: true,
+  },
       }
     )
     return steps

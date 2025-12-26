@@ -1,0 +1,8 @@
+procs:
+  next:
+    cmd: ["cmd", "/c", "npm run dev"]
+    cwd: "D:/vscodes/turborepo/p6"
+
+  inngest:
+    cmd: ["cmd", "/c", "npm run inngest:dev"]
+    cwd: "D:/vscodes/turborepo/p6"

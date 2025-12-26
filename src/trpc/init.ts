@@ -1,4 +1,7 @@
-import { initTRPC } from '@trpc/server';
+import { auth } from '@/lib/auth';
+import { initTRPC, TRPCError } from '@trpc/server';
+import { is } from 'date-fns/locale';
+import { headers } from 'next/headers';
 import { cache } from 'react';
 export const createTRPCContext = cache(async () => {
   /**
@@ -20,3 +23,18 @@ const t = initTRPC.create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
+export const protectedProcedures = baseProcedure.use(async({ctx , next})=>{
+  const sessions = await auth.api.getSession({
+    headers:await headers()
+  })
+  if(!sessions){
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Unauthorized",
+    })
+  }
+  return next({ctx:{
+    ...ctx,
+    auth:sessions
+  }})
+})

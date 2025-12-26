@@ -1,11 +1,22 @@
 import { z } from 'zod';
-import { baseProcedure, createTRPCRouter } from '../init';
+import { baseProcedure, createTRPCRouter, protectedProcedures } from '../init';
 import prisma from '@/lib/db';
 export const appRouter = createTRPCRouter({
-  getUsers: baseProcedure
+  getUsers: protectedProcedures
     
-    .query(() => {
-      return prisma.user.findMany();
+    .query(async({ctx}) => {
+      if(!ctx){
+        return []
+      }
+      
+      const res =await  prisma.user.findMany({
+        where:{
+          id:ctx?.auth?.user.id 
+        }
+      }
+      );
+      
+      return res;
       
     }),
 });

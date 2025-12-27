@@ -1,12 +1,13 @@
-import { SignUpForm } from '@/features/auth/components/Sign-upForm'
 import { requireUnauth } from '@/lib/auth-utils'
+import dynamic from "next/dynamic";
+import SignUpClient from './SignClient';
 
-type Props = {}
 
-const SignUp = async(props: Props) => {
+
+const SignUp = async() => {
   await requireUnauth()
   return (
-            <SignUpForm   className='w-87.5   '/>
+            <SignUpClient  />
 
         
   )

@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth';
+import { polarClient } from '@/lib/polar';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { is } from 'date-fns/locale';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 export const createTRPCContext = cache(async () => {
@@ -36,5 +36,23 @@ export const protectedProcedures = baseProcedure.use(async({ctx , next})=>{
   return next({ctx:{
     ...ctx,
     auth:sessions
+  }})
+})
+export const premimumProcedure = protectedProcedures.use(async({ctx , next})=>{
+  
+  const customer = await polarClient.customers.getStateExternal({
+    externalId:ctx.auth.user.id
+  })
+
+
+  if(!customer.activeSubscriptions || customer.activeSubscriptions.length===0){
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Premium access required",
+    })
+  }
+  return next({ctx:{
+    ...ctx,
+    customer
   }})
 })

@@ -75,12 +75,12 @@ export function LoginForm({
   });
 
   return (
-    <div>
+    <div >
       <Form {...methods}>
         <form onSubmit={onHandleSubmit} className="h-full">
           <div className="flex flex-col justify-between gap-3 h-full">
             <Loader loading={loading}>
-              <div className={cn("flex flex-col gap-6", className)}>
+              <div className={cn("flex flex-col gap-6", className='w-87.5  ')}>
                 <Card>
                   <CardHeader>
                     <CardTitle>Login to your account</CardTitle>

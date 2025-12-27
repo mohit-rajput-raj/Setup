@@ -1,19 +1,14 @@
-// import { LoginForm } from '@/features/auth/components/loginForm'
-import { LoginForm } from '@/features/auth/components/loginForm'
+
 import { requireUnauth } from '@/lib/auth-utils'
-import React from 'react'
+import dynamic from "next/dynamic";
+import LoginClient from './loginClient';
+
 
 type Props = {}
 
-const Login = async(props: Props) => {
-  await requireUnauth()
-  return (
-    
-            <LoginForm className='w-87.5  '/>
+const Login = async (props: Props) => {
+  await requireUnauth();
+  return <LoginClient />;
+};
 
-        
-    
-  )
-}
-
-export default Login
+export default Login;

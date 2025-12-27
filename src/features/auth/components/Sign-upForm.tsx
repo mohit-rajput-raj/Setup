@@ -94,7 +94,7 @@ export function SignUpForm({
       >
         <div className="flex flex-col justify-between gap-3 h-full">
           <Loader loading={loading}>
-            <Card className={cn(className)}>
+            <Card className={cn( className='w-87.5  ')}>
               <CardHeader>
                 <CardTitle>Sign-up to your account</CardTitle>
                 <CardDescription>

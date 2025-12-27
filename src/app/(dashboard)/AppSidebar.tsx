@@ -61,8 +61,12 @@ const menuItems = [
   },
 ];
 import { useRouter } from 'next/navigation'
+import { betterAuth } from "better-auth";
+import { sl } from "date-fns/locale";
+import { useHasActiveSubsription } from "@/features/subscription/hooks/use-subsription";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const ptthname = usePathname();
+  const {hasActiveSubscription , isLoading} = useHasActiveSubsription();
   const router = useRouter();
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -112,15 +116,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={()=>{}} tooltip={"upgrage to pro"} className="gap-x-4 h-10 px-4">
+          {
+            !isLoading && !hasActiveSubscription && (
+              <SidebarMenuItem>
+            <SidebarMenuButton onClick={()=>{authClient.checkout({slug:"pro"})}} tooltip={"upgrage to pro"} className="gap-x-4 h-10 px-4">
               <StarIcon className="h-4 w-4"/>
               <span>Upgrade to Pro</span>
 
             </SidebarMenuButton>
           </SidebarMenuItem>
+            )
+          }
           <SidebarMenuItem>
-            <SidebarMenuButton onClick={()=>{}} tooltip={"Billing portal"} className="gap-x-4 h-10 px-4">
+            <SidebarMenuButton onClick={()=>{authClient.customer.portal()}} tooltip={"Billing portal"} className="gap-x-4 h-10 px-4">
               <CreditCardIcon className="h-4 w-4"/>
               <span>Billing portal</span>
 

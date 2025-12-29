@@ -15,6 +15,8 @@ const Layout =async ({children}:{children:React.ReactNode}) => {
       <AppSidebar/>
         <SidebarInset>
 <SiteHeader />
+
+
         {children}
         </SidebarInset>
     </SidebarProvider>
